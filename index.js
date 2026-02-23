@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   res.json({ mensaje: 'estoy aqui en vercel man' });
 });
 app.use(cors({
-  origin: 'https://offertas-29gx.vercel.app/',
+  origin: 'https://offertas-29gx.vercel.app',
   credentials: true,
 }));
 app.use(express.json());
@@ -45,4 +45,5 @@ app.use('/api/push',     pushRoutes);
 
 
 module.exports = app;
+
 
