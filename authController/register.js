@@ -37,7 +37,7 @@ function verificationEmailHTML(code, name) {
                 ¡Hola, ${name}! 👋
               </h2>
               <p style="margin:0 0 24px;color:#6b7280;font-size:15px;line-height:1.6;">
-                Gracias por registrarte en Offerton. Para activar tu cuenta, ingresá el siguiente código de verificación:
+                Gracias por registrarte en Off-ertas. Para activar tu cuenta, ingresá el siguiente código de verificación:
               </p>
 
               <!-- Code box -->
@@ -63,7 +63,7 @@ function verificationEmailHTML(code, name) {
           <tr>
             <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:24px 40px;text-align:center;">
               <p style="margin:0;color:#9ca3af;font-size:12px;line-height:1.6;">
-                © ${new Date().getFullYear()} Offerton. Todos los derechos reservados.<br/>
+                © ${new Date().getFullYear()} Off-ertas. Todos los derechos reservados.<br/>
                 Este es un email automático, por favor no respondas.
               </p>
             </td>
@@ -110,7 +110,7 @@ function resendEmailHTML(code, name) {
                 Nuevo código solicitado 🔄
               </h2>
               <p style="margin:0 0 24px;color:#6b7280;font-size:15px;line-height:1.6;">
-                Hola <strong>${name}</strong>, aquí está tu nuevo código de verificación para Offerton:
+                Hola <strong>${name}</strong>, aquí está tu nuevo código de verificación para Off-ertas:
               </p>
 
               <!-- Code box -->
@@ -136,7 +136,7 @@ function resendEmailHTML(code, name) {
           <tr>
             <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:24px 40px;text-align:center;">
               <p style="margin:0;color:#9ca3af;font-size:12px;line-height:1.6;">
-                © ${new Date().getFullYear()} Offerton. Todos los derechos reservados.<br/>
+                © ${new Date().getFullYear()} Off-ertas. Todos los derechos reservados.<br/>
                 Este es un email automático, por favor no respondas.
               </p>
             </td>
@@ -173,7 +173,7 @@ exports.register = async (req, res) => {
     // Enviar email en background — no bloqueamos la respuesta
     sendEmail(
       email,
-      '🔐 Código de verificación — Offerton',
+      '🔐 Código de verificación — Off-ertas',
       `Tu código de verificación es: ${code}. Válido por 10 minutos.`,
       verificationEmailHTML(code, name)
     ).catch(err => console.error('Error enviando email de verificación:', err));
@@ -234,7 +234,7 @@ exports.resendVerificationCode = async (req, res) => {
 
     sendEmail(
       email,
-      '🔄 Nuevo código de verificación — Offerton',
+      '🔄 Nuevo código de verificación — Off-ertas',
       `Tu nuevo código es: ${newCode}. Válido por 10 minutos.`,
       resendEmailHTML(newCode, user.name)
     ).catch(err => console.error('Error reenviando código:', err));
@@ -317,7 +317,7 @@ function forgotPasswordHTML(code, name) {
           <tr>
             <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:24px 40px;text-align:center;">
               <p style="margin:0;color:#9ca3af;font-size:12px;line-height:1.6;">
-                © ${new Date().getFullYear()} Offerton. Todos los derechos reservados.<br/>
+                © ${new Date().getFullYear()} Off-ertas. Todos los derechos reservados.<br/>
                 Este es un email automático, por favor no respondas.
               </p>
             </td>
@@ -374,7 +374,7 @@ function passwordChangedHTML(name) {
           <tr>
             <td style="background:#f9fafb;border-top:1px solid #e5e7eb;padding:24px 40px;text-align:center;">
               <p style="margin:0;color:#9ca3af;font-size:12px;">
-                © ${new Date().getFullYear()} Offerton. Todos los derechos reservados.
+                © ${new Date().getFullYear()} Off-ertas. Todos los derechos reservados.
               </p>
             </td>
           </tr>
@@ -408,7 +408,7 @@ exports.forgotPassword = async (req, res) => {
 
     sendEmail(
       email,
-      '🔑 Recuperar contraseña — Offerton',
+      '🔑 Recuperar contraseña — Off-ertas',
       `Tu código para restablecer la contraseña es: ${code}. Válido por 15 minutos.`,
       forgotPasswordHTML(code, user.name)
     ).catch(err => console.error('Error enviando email de recuperación:', err));
@@ -448,7 +448,7 @@ exports.resetPassword = async (req, res) => {
 
     sendEmail(
       email,
-      '✅ Contraseña actualizada — Offerton',
+      '✅ Contraseña actualizada — Off-ertas',
       'Tu contraseña fue actualizada correctamente.',
       passwordChangedHTML(user.name)
     ).catch(err => console.error('Error enviando confirmación:', err));
@@ -458,4 +458,5 @@ exports.resetPassword = async (req, res) => {
     console.error('resetPassword error:', err);
     res.status(500).json({ message: 'Error del servidor' });
   }
+
 };
