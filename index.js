@@ -22,7 +22,9 @@ startAbandonedCartJob();
 
 const app = express();
 connectDB();
-
+app.get('/', (req, res) => {
+  res.json({ mensaje: 'estoy aqui en vercel man' });
+});
 app.use(cors({
   origin:      process.env.FRONTEND_URL || 'http://localhost:3000',
   credentials: true,
@@ -40,5 +42,6 @@ app.use('/api/cart',     cartRoutes);
 app.use('/api/orders',   orderRoutes);
 app.use('/api/chat',     chatRoutes);
 app.use('/api/push',     pushRoutes);
+
 
 module.exports = app;
