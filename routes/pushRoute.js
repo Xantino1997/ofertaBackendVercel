@@ -8,7 +8,7 @@ const User = require("../models/userModel");
 
 // ── Configurar VAPID (generá las keys con: npx web-push generate-vapid-keys) ──
 webpush.setVapidDetails(
-  `mailto:"ala282016@gmail.com"}`,
+  `mailto:ala282016@gmail.com`,
   "BLR8fiu0VNED_-qHI0rOQn_UPEtJptD4wiYJXuBQxgBhFFRf_SvU54F95IBaBG86V-cv3wwZ4l_NlLD236io1rw",
   "aGmJeLDh7nI-_FnpDVVhrx2Yk8xDa80unM1b1t__MB8",
 );
