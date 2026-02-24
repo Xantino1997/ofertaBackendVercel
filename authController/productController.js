@@ -94,7 +94,6 @@ exports.createProduct = async (req, res) => {
     });
 
     // ── Notificar a seguidores via Push (no bloquea la respuesta) ──────────
-    // Fire-and-forget: si falla no afecta al vendedor
     getPushNotifier()({
       businessId:   businessId.toString(),
       businessName: business.name,
@@ -126,9 +125,9 @@ exports.updateProduct = async (req, res) => {
 
     const { lat, lng, price, discount, stock, deliveryRadius, ...rest } = req.body;
 
-    if (price !== undefined)         product.price = parseFloat(price);
-    if (discount !== undefined)      product.discount = parseFloat(discount);
-    if (stock !== undefined)         product.stock = parseInt(stock);
+    if (price !== undefined)          product.price          = parseFloat(price);
+    if (discount !== undefined)       product.discount       = parseFloat(discount);
+    if (stock !== undefined)          product.stock          = parseInt(stock);
     if (deliveryRadius !== undefined) product.deliveryRadius = parseFloat(deliveryRadius);
 
     Object.assign(product, rest);
@@ -168,12 +167,16 @@ exports.deleteProduct = async (req, res) => {
 
 exports.getPublicProducts = async (req, res) => {
   try {
-    const { lat, lng, category, search } = req.query;
-    const query = {};
-    if (category) query.category = category;
-    if (search)   query.name = { $regex: search, $options: "i" };
+    const { lat, lng, category, search, businessId, limit } = req.query;
 
-    const raw      = await Product.find(query).populate("businessId", BIZ_SELECT).lean();
+    const query = {};
+    if (category)   query.category   = category;
+    if (search)     query.name       = { $regex: search, $options: "i" };
+    if (businessId) query.businessId = businessId; // ✅ FIX: filtrar por negocio
+
+    const maxResults = parseInt(limit) || 100;
+
+    const raw      = await Product.find(query).limit(maxResults).populate("businessId", BIZ_SELECT).lean();
     const products = raw.map(mapBusiness);
 
     const filtered = products.filter((p) => {
@@ -197,7 +200,8 @@ exports.getPublicProducts = async (req, res) => {
 
 exports.getRandomProducts = async (req, res) => {
   try {
-    const raw = await Product.aggregate([{ $sample: { size: 20 } }]);
+    const limit = parseInt(req.query.limit) || 20;
+    const raw = await Product.aggregate([{ $sample: { size: limit } }]);
     const populated = await Product.populate(raw, { path: "businessId", select: BIZ_SELECT });
     const products  = populated.map(mapBusiness);
     res.json({ products });
